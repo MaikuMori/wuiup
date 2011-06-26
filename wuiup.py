@@ -53,7 +53,7 @@ def main():
     try:
         #Get favorites
         #url = 'http://www.wowinterface.com/patcher/favs/%s/%s.xml' % (WUI_PASSWORD, WUI_USERNAME)
-        url = 'http://www.wowinterface.com/patcher/favs//%s.xml' % config['wui_user'] #Passwordless way of doing it!
+        url = 'http://www.wowinterface.com/patcher/favs/a/%s.xml' % config['wui_user'] #Passwordless way of doing it!
         dom = minidom.parse(urllib2.urlopen(url))
         favorited_addons = {}
         for node in dom.getElementsByTagName('Ui'):

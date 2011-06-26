@@ -33,7 +33,7 @@ def wuiup_unzip(mZip, path):
             nf.close()
 
 def validate_user(user): #To be moved to helper functions
-    url = "http://www.wowinterface.com/patcher/favs//%s.xml" % user
+    url = "http://www.wowinterface.com/patcher/favs/a/%s.xml" % user
     dom = minidom.parse(urllib2.urlopen(url))
     if dom.getElementsByTagName('error'):
         if int(dom.getElementsByTagName('id')[0].firstChild.nodeValue) == 103:
