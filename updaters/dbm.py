@@ -26,11 +26,11 @@ class DeadlyBossModsUpdater(Updater):
     def _canUpdate(self):
         #http://www.deadlybossmods.com/download.php?id=6
         #<a href="http://www.deadlybossmods.com/download.php?id=6">4.83-r6008-alpha</a>
-        source = urllib2.urlopen('http://www.deadlybossmods.com/index.php')
-        myregex = re.compile('download.php\?id=6">(.+?)<')
+        source = urllib2.urlopen('http://www.ninjapull.de/index.php?option=com_content&view=article&id=100&Itemid=121&lang=en')
+        myregex = re.compile('>([0-9]+?\.[0-9]+?\.[0-9]+?-alpha)<')
         m = myregex.search(source.read())
         if m:
-            self.file = 'http://www.deadlybossmods.com/download.php?id=6'
+            self.file = 'http://www.ninjapull.de/dbm/download.php?id=6'
             self.last_version = m.group(1)
             if self.last_version != self.current_version:
                 return True
@@ -38,5 +38,5 @@ class DeadlyBossModsUpdater(Updater):
                 return False
         else:
             if self.logging:
-                self.logging.error("Regex didn't match, probably download URL has changed.")
+                self.logging.error("Regex didn't match, probably download URL has changed. (Deadly Boss Mods)")
             return False

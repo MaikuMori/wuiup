@@ -114,13 +114,13 @@ class CurseAddon(object):
                     return True
                 else:
                     if self.logging:
-                        self.logging.error("CurseAddon: Regex didn't match, probably download page has been changed.")
+                        self.logging.error("CurseAddon: Regex didn't match, probably download page has been changed. (%s)", self.addon_name)
                     return False
             else:
                 return False
         else:
             if self.logging:
-                self.logging.error("CurseAddon: Regex didn't match, probably file list page has been changed.")
+                self.logging.error("CurseAddon: Regex didn't match, probably file list page has been changed. (%s)", self.addon_name)
             return False
 	
 		
