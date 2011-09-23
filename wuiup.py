@@ -147,7 +147,7 @@ def main():
                 except Exception:
                     logging.warning('Failed to run before update hook.')
             
-            m = re.match(r'\<(.+?)\.', str(updater)) #This should never fail, so no testing.
+            m = re.match(r'\<(.+?) ', str(updater)) #This should never fail, so no testing.
             updater_id = m.group(1)
             new_version = False            
             if old_addons.has_key(updater_id):

@@ -1,5 +1,5 @@
 """Prototype for Custom Updaters"""
-import os, sys, urllib2, zipfile
+import os, sys, re, urllib2, zipfile
 from StringIO import StringIO
 
 from helper_functions import *
@@ -50,7 +50,79 @@ class Updater(object):
 		"""Returns file name of updater, used as unique ID"""
 		return
 	
-
+class CurseAddon(object):
+    """Mixin for addons hosted on wowace.com curseforge.com
+      
+    Overwrite addon_id with addon name as it appears in the wowace.com url.
+    For example for http://www.wowace.com/addons/recount/files/, the correct
+    sting is 'recount'.
+    """
+    addon_id = False
+    addon_type = False
+    addon_name = False
+    
+    url = {
+        "WOWACE" : {
+            "base"      : "http://www.wowace.com",
+            "static"    : "http://www.wowace.com",
+            "file_list" : "http://www.wowace.com/addons/%s/files/"
+        },
+        "CURSEFORGE" : {
+            "base"      : "http://wow.curseforge.com",
+            "static"    : "http://www.curseforge.com",
+            "file_list" : "http://wow.curseforge.com/addons/%s/files/"
+        }
+    }
+    
+    def update(self,cv):
+        if not self.addon_id:
+            print "CurseAddon: specify addon_id (it's the id from wowace url)"
+            return False
+        if not self.addon_type in ["WOWACE", "CURSEFORGE"]:
+            print "CurseAddon: specify addon_type (WOWACE OF CURSEFORGE)"
+            return False
+        if not self.addon_name:
+            print "CurseAddon: specify addon_name"
+            return False
+            
+        self.current_version = cv
+        if self._canUpdate():
+            if self.logging:
+                self.logging.info(self.current_version and 
+                    'Updating: %s from version %s to %s' % (self.addon_name,
+                                                            self.current_version,
+                                                            self.last_version) or
+                    'Installing: %s' % self.addon_name)
+            self._dl_del_unzip(self.file)
+            return self.last_version
+        return False
+        
+    def _canUpdate(self):
+        addon_list_page = urllib2.urlopen(self.url[self.addon_type]["file_list"] % self.addon_id)
+        #<a href="/addons/recount/files/1478-v4-2-0e-release/">v4.2.0e release</a>
+        m = re.search(r'href="(/addons/' + self.addon_id + '/files/([a-zA-Z0-9-]+?)/)">(.+?)<', addon_list_page.read())
+        if m:
+            self.last_version = m.group(3)
+            if self.last_version != self.current_version:
+                download_page = urllib2.urlopen(self.url[self.addon_type]["base"] + m.group(1))
+                #<a href="http://static.wowace.com/content/files/529/668/Recount-v4.2.0e_release.zip">
+                #<a href="http://www.curseforge.com/media/files/527/306/TradeSkillMaster-v0.2.4Beta.zip">
+                #<a href="http://www.curseforge.com/media/files/530/116/TradeSkillMaster_Crafting-r438.zip">
+                m = re.search(r'href="(' + self.url[self.addon_type]["static"] + '/media/files/(.+?).zip)"', download_page.read())
+                if m:
+                    self.file = m.group(1)
+                    return True
+                else:
+                    if self.logging:
+                        self.logging.error("CurseAddon: Regex didn't match, probably download page has been changed.")
+                    return False
+            else:
+                return False
+        else:
+            if self.logging:
+                self.logging.error("CurseAddon: Regex didn't match, probably file list page has been changed.")
+            return False
+	
 		
 def import_updaters(dir):
 	""" Imports custom updaters
