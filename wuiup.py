@@ -9,9 +9,9 @@ from updaters import import_updaters, find_updaters
 from helper_functions import *
 
 __author__ = "Miks Kalnins"
-__copyright__ = "Copyright 2009, Miks Kalnins"
+__copyright__ = "Copyright 2009 - 2012, Miks Kalnins"
 __license__ = "New BSD License"
-__version__ = "0.3"
+__version__ = "0.41"
 __maintainer__ = "Miks Kalnins"
 __email__ = "mikskalnins@maikumori.com"
 __status__ = "Production"
@@ -154,7 +154,7 @@ def main():
                 try:
                     new_version = updater.update(old_addons[updater_id])
                 except (Exception), error:
-                    logging.error('Error while runing custom updaters update function: %s' % error)
+                    logging.error('Error while runing custom updaters (%s) update function: %s' % (str(updater), error))
                 if new_version:
                     favorited_addons[updater_id] = new_version
                     if old_addons[updater_id] != new_version: info['addons_updated'] = info['addons_updated'] + 1
@@ -164,7 +164,7 @@ def main():
                 try:
                     new_version = updater.update(None)
                 except (Exception), error:
-                    logging.error('Error while runing custom updaters update function: %s' % error)
+                    logging.error('Error while runing custom updaters (%s) update function: %s' % (str(updater), error))
                 if new_version:
                     favorited_addons[updater_id] = new_version
                     info['addons_installed'] = info['addons_updated'] + 1

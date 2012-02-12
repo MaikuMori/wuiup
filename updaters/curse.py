@@ -110,3 +110,43 @@ class HermesUpdater(CurseAddon, Updater):
     addon_name = "Hermes"
     addon_type = "CURSEFORGE"
     addon_id = "hermes"
+    
+class CollectMeUpdater(CurseAddon, Updater):
+    addon_name = "Collect Me"
+    addon_type = "CURSEFORGE"
+    addon_id = "collect_me"
+
+class WeakAurasUpdater(CurseAddon, Updater):
+    addon_name = "Weak Auras"
+    addon_type = "WOWACE"
+    addon_id = "weakauras"
+    
+class RetardCheckUpdater(CurseAddon, Updater):
+    addon_name = "Retard Check"
+    addon_type = "WOWACE"
+    addon_id = "retardcheck"
+
+class SavedInstanceUpdater(CurseAddon, Updater):
+    addon_name = "SavedInstances"
+    addon_type = "WOWACE"
+    addon_id = "saved_instances"
+
+class ReforgeLiteUpdater(CurseAddon, Updater):
+    addon_name = "ReforgeLite"
+    addon_type = "WOWACE"
+    addon_id = "reforgelite"
+    
+class SpellflashUpdater(CurseAddon, Updater):
+    addon_name = "Spellflash"
+    addon_type = "CURSEFORGE"
+    addon_id = "spellflash"
+    
+class SpellflashHunterUpdater(CurseAddon, Updater):
+    addon_name = "Spellflash: Hunter"
+    addon_type = "CURSEFORGE"
+    addon_id = "spellflash_hunter"
+    
+class SpellflashPriestUpdater(CurseAddon, Updater):
+    addon_name = "Spellflash: Priest"
+    addon_type = "CURSEFORGE"
+    addon_id = "spellflash-priest"

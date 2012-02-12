@@ -41,7 +41,7 @@ class DeadlyBossModsUpdater(Updater):
             # return False
             
             
-        conn = httplib.HTTPConnection("www.ninjapull.de")
+        conn = httplib.HTTPConnection("85.114.128.119")
         conn.request("HEAD", "/dbm/download.php?id=6")
         resp = conn.getresponse()
         #'attachment; filename="DBM-svn-4.10.0-r6576-alpha.zip"'
